@@ -1,0 +1,457 @@
+/* ==========================================================================
+
+	Google Font
+
+========================================================================== */
+@font-face {
+  font-family: "Poppins", sans-serif;
+  font-family: "Oranienbaum", serif;
+  font-family: 'Didot';
+  src: url("Didot.eot");
+  src: url("Didot.eot?#iefix") format("embedded-opentype"), url("Didot.woff2") format("woff2"), url("Didot.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --gutter: 4rem;
+}
+
+ul, li {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: 0 0;
+  list-style: none;
+}
+
+/* ==========================================================================
+
+	Base styles: opinionated defaults
+
+========================================================================== */
+html {
+  font-size: calc(100vw / 1920 * 10);
+}
+
+body {
+  background-color: #fff;
+  font-family: "Poppins", sans-serif;
+  color: #848484;
+  font-weight: 300;
+  line-height: 27px;
+  overflow-x: none;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section,
+img,
+main {
+  display: block;
+}
+
+audio,
+canvas,
+video {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #343434;
+}
+
+::-moz-selection {
+  background: #222222;
+  color: #fff;
+  text-shadow: none;
+}
+
+::selection {
+  background: #222222;
+  color: #fff;
+  text-shadow: none;
+}
+
+a,
+input,
+textarea,
+button,
+body,
+img {
+  -webkit-transition-delay: 0s;
+          transition-delay: 0s;
+  -webkit-transition-duration: 0.6s;
+          transition-duration: 0.6s;
+  -webkit-transition-property: all;
+  transition-property: all;
+  -webkit-transition-timing-function: ease;
+          transition-timing-function: ease;
+}
+
+a {
+  text-decoration: none;
+  outline: none;
+  color: #222222;
+}
+
+a:focus,
+img:focus,
+button:focus,
+.btn:focus {
+  outline: none;
+  text-decoration: none;
+}
+
+/* ==========================================================================
+
+	Header styles
+
+========================================================================== */
+.content-wrapper {
+  padding: 0 25px;
+}
+
+header {
+  background-color: white;
+  padding: 25px 0;
+}
+
+header img {
+  display: inline-block;
+  clear: left;
+  margin: 0;
+}
+
+/* Navigation list styles */
+header {
+  margin: auto;
+}
+
+header .nav-logo {
+  width: 140px;
+  display: inline-block;
+  float: left;
+}
+
+.nav-logo img {
+  width: 140px;
+}
+
+nav ul {
+  display: inline-block;
+  font-size: 0.85rem;
+  margin: 0 20px;
+}
+
+nav li {
+  display: inline;
+  padding: 0 20px;
+}
+
+nav li a {
+  display: inline-block;
+  color: black;
+  text-decoration: none;
+  padding: 5px 10px;
+}
+
+/* ==========================================================================
+
+	Inner
+
+========================================================================== */
+.container-l {
+  padding: 0 25px;
+}
+
+.container-s {
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#index-content #intro {
+  width: 50%;
+  height: 80vh;
+  background-color: #f2f2f2;
+}
+
+.cover--main {
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.slider--grid {
+  top: 0;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[3];
+      grid-template-columns: repeat(3, 1fr);
+  grid-gap: 0;
+  /*grid-template-rows: auto;*/
+  height: auto;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  /* ADDED */
+  grid-auto-flow: column;
+}
+
+.cover--gallery {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.slider--grid-col {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.slider--grid-col figure img {
+  display: block;
+  margin: 0 auto;
+}
+
+.slider--grid-col li {
+  padding-top: calc(var(--gutter) * 5);
+}
+
+.list--item.size-lg img {
+  max-width: 75%;
+}
+
+.list--item.size-md img {
+  max-width: 70%;
+}
+
+.list--item.size-sm img {
+  max-width: 67%;
+}
+
+.list--item.size-xs img {
+  max-width: 58%;
+}
+
+.list--item img {
+  -webkit-box-shadow: rgba(50, 50, 93, 0.25) 0 50px 100px -20px, rgba(0, 0, 0, 0.3) 0 30px 60px -30px;
+          box-shadow: rgba(50, 50, 93, 0.25) 0 50px 100px -20px, rgba(0, 0, 0, 0.3) 0 30px 60px -30px;
+}
+
+@-webkit-keyframes col1_rowup {
+  from {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  to {
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes col1_rowup {
+  from {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  to {
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+}
+
+@-webkit-keyframes col2_rowup {
+  from {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  to {
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes col2_rowup {
+  from {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  to {
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+}
+
+@-webkit-keyframes col3_rowup {
+  from {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  to {
+    -webkit-transform: translateY(50%);
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes col3_rowup {
+  from {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  to {
+    -webkit-transform: translateY(50%);
+    transform: translateY(-50%);
+  }
+}
+
+#col1 {
+  will-change: transform, opacity;
+  position: relative;
+  margin-top: -200px;
+}
+
+.col1--animated {
+  -webkit-animation: 20s col1_rowup linear infinite normal;
+  animation: 85s col1_rowup linear infinite normal;
+}
+
+#col2 {
+  will-change: transform, opacity;
+  position: relative;
+}
+
+.col2--animated {
+  -webkit-animation: 20s col2_rowup linear infinite normal;
+  animation: 80s col2_rowup linear infinite normal;
+}
+
+#col3 {
+  will-change: transform, opacity;
+  position: relative;
+  margin-top: -80px;
+}
+
+.col3--animated {
+  -webkit-animation: 20s col3_rowup linear infinite normal;
+  animation: 80s col3_rowup linear infinite normal;
+}
+
+.cover--main::before {
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.52)), to(rgba(255, 255, 255, 0)));
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.52) 0%, rgba(255, 255, 255, 0) 100%);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.52)), to(rgba(255, 255, 255, 0)));
+  background-image: linear-gradient(rgba(255, 255, 255, 0.52) 0%, rgba(255, 255, 255, 0) 100%);
+  top: 0;
+}
+
+.cover--main::after {
+  background: -webkit-gradient(linear, left bottom, left top, from(rgba(255, 255, 255, 0.32)), to(rgba(255, 255, 255, 0)));
+  background: linear-gradient(to top, rgba(255, 255, 255, 0.32) 0%, rgba(255, 255, 255, 0) 100%);
+  background-image: -webkit-gradient(linear, left bottom, left top, from(rgba(255, 255, 255, 0.32)), to(rgba(255, 255, 255, 0)));
+  background-image: linear-gradient(to top, rgba(255, 255, 255, 0.32) 0%, rgba(255, 255, 255, 0) 100%);
+  bottom: 0;
+  opacity: 0.5;
+}
+
+.cover--main::before, .cover--main::after {
+  content: "";
+  height: 250px;
+  position: absolute;
+  width: 100%;
+  right: 0;
+  left: 0;
+  background-position-x: initial;
+  background-position-y: initial;
+  background-size: initial;
+  background-attachment: initial;
+  background-origin: initial;
+  background-clip: initial;
+  background-color: initial;
+  z-index: 1;
+}
+
+.cover--name {
+  font-family: 'Didot';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  font-size: 16rem;
+  z-index: 1;
+  color: black;
+  text-shadow: 0rem 0rem 3rem #ffffff73;
+}
+
+.cover--menu {
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  z-index: 1;
+  color: black;
+  padding-top: 5rem;
+}
+
+.cover--menu a {
+  text-decoration: none;
+  position: relative;
+  font-size: 2rem;
+  -webkit-transition: -webkit-transform .2s;
+  transition: -webkit-transform .2s;
+  transition: transform .2s;
+  transition: transform .2s, -webkit-transform .2s;
+  /* Animation */
+}
+
+.cover--menu a:after {
+  content: '';
+  width: 90%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  border-width: 0 0 0.2px;
+  border-style: solid;
+}
+
+.cover--menu a:hover {
+  -webkit-transform: scale(1.3);
+          transform: scale(1.3);
+  color: inherit;
+}
+/*# sourceMappingURL=main.css.map */
