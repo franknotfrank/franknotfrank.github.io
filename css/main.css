@@ -460,5 +460,10 @@ nav li a {
   html {
     font-size:0.6rem;
   }
+
+  :root {
+  --gutter: 0.9rem;
+}
+
 }
 /*# sourceMappingURL=main.css.map */
