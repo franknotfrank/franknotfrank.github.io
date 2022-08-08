@@ -458,7 +458,7 @@ nav li a {
 
 @media screen and (max-width: 800px) {
   html {
-    font-size:0.6rem;
+    font-size:0.5rem;
   }
 
   :root {
