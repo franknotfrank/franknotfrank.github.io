@@ -458,7 +458,7 @@ nav li a {
 
 @media screen and (max-width: 800px) {
   html {
-    font-size:0.7rem;
+    font-size:0.55rem;
   }
     .cover--name {
         font-size:5em;
