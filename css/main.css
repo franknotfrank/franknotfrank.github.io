@@ -6,9 +6,7 @@
 @font-face {
   font-family: "Poppins", sans-serif;
   font-family: "Oranienbaum", serif;
-  font-family: 'Didot';
-  src: url("Didot.eot");
-  src: url("Didot.eot?#iefix") format("embedded-opentype"), url("Didot.woff2") format("woff2"), url("Didot.woff") format("woff");
+  font-family: 'Playfair Display', serif;
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -398,7 +396,7 @@ nav li a {
 }
 
 .cover--name {
-  font-family: 'Didot';
+  font-family: 'Playfair Display';
   position: absolute;
   top: 50%;
   left: 50%;
