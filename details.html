@@ -1,0 +1,773 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Detail</title>
+  <style>
+    @import url('https://db.onlinewebfonts.com/c/d45f96029e61832fd84afffd3068b768?family=DIN+Condensed+Bold');
+        html, body {
+      height: 100%;
+       margin: 0;
+     }
+    body {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    
+    body { font-family: "Open Sans", sans-serif; margin: 0;}
+        a {
+          text-decoration:none;
+      }
+
+  
+    .c-header__tool {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+
+    .c-header__trigger {
+      cursor: pointer;
+      position: relative;
+      background-color: #fff;
+      height: 70px;
+      width: 70px;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: background-color 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      z-index: 1001;
+    }
+
+
+    .c-header__bc {
+       padding-top: 75px;
+       position: fixed;
+       margin-left: -15px;
+}
+    .c-header__bc ul li {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex
+;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+    .c-header__bc ul li:before {
+    background-color: #000;
+    content: '';
+    display: block;
+    height: 80px;
+    width: 0.5px;
+    margin-bottom: 20px;
+}
+
+    .c-header__bc ul li a {
+        color:black;
+    font-size: 14px;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    display: block;
+    -webkit-writing-mode: vertical-rl;
+    -ms-writing-mode: tb-rl;
+    writing-mode: vertical-rl;
+}
+
+    .c-header__trigger.active {
+      background-color: #000;
+    }
+
+    .c-header__triggerWrap {
+      position: relative;
+      height: 19px;
+      width: 20px;
+    }
+
+    .c-header__triggerWrap span {
+      background-color: #000;
+      width: 100%;
+      height: 1px;
+      position: absolute;
+      left: 0;
+      transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), background-color 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    .c-header__triggerWrap span:nth-child(1) {
+      top: 0;
+    }
+
+    .c-header__triggerWrap span:nth-child(2) {
+      top: 9px;
+    }
+
+    .c-header__triggerWrap span:nth-child(3) {
+      bottom: 0;
+    }
+
+    .c-header__trigger.active .c-header__triggerWrap span:nth-child(1) {
+      transform: translateY(9px) rotate(45deg);
+      background-color: #fff;
+    }
+
+    .c-header__trigger.active .c-header__triggerWrap span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .c-header__trigger.active .c-header__triggerWrap span:nth-child(3) {
+      transform: translateY(-9px) rotate(-45deg);
+      background-color: #fff;
+    }
+
+    .c-header__trigger:before {
+      background-color: #000;
+      content: '';
+      display: block;
+      position: absolute;
+      right: 0;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      transform: scaleX(0) skewX(30deg);
+      transform-origin: top right;
+    }
+
+    .c-header__trigger:after {
+      background-color: rgba(0, 0, 0, 0.9);
+      content: '';
+      display: block;
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transition: opacity 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    .sidebar {
+       font-family: 'DIN Condensed Bold', sans-serif;
+       font-size:1.5rem;
+       letter-spacing:2px;
+      position: fixed;
+      top: 0;
+      left: -400px;
+      width: 400px;
+      height: 100%;
+      background-color: #f5f5f5;
+      padding: 20px;
+      z-index: 999;
+      opacity: 0;
+      transform: translateX(-100%);
+      transition: opacity 0.4s ease, transform 0.7s ease;
+    }
+
+    .sidebar.active {
+      opacity: 1;
+      transform: translateX(0);
+      left: 0;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding-top: 130px;
+      margin: 0;
+    }
+
+    .sidebar ul li {
+      padding: 15px 0;
+      font-size: 1.5em;
+      font-weight: bold;
+      color: #000;
+      cursor: pointer;
+    }
+
+    .sidebar ul li:hover {
+      color: #333;
+    }
+
+    .sidebar ul li a {
+        color:black;
+         text-decoration: none;
+    }  
+
+      .sidebar ul li:last-child:after {
+      content: '';
+      margin-top:30px;
+      background-color:black;
+      display: block;
+      height: 0.6px;
+      width: 50px;
+      position: absolute;
+      
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 1);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease, visibility 0s linear 0.4s;
+      z-index: 998;
+    }
+
+    .overlay.active {
+      opacity: 0.5;
+      visibility: visible;
+      transition: opacity 0.4s ease;
+    }
+
+
+
+    .detail-container { flex: 1 0 auto; /* This pushes the footer down */}
+    .detail-title {
+      font-size: 2.3em;
+      font-weight:600;
+      letter-spacing: 3px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .sub-title{
+      text-align: center;
+      font-weight: 200;
+    }
+    .detail-image img {
+    width: 100%;
+  height: 650px; 
+  object-fit: cover; 
+  object-position: center 90%;
+}
+    .detail-info {
+        max-width:1000px;
+        margin:0 auto;
+        padding-top:2em;
+        padding-left:80px;
+        padding-right:80px;
+        overflow: hidden;
+
+    }
+    .detail-info p { margin: 10px 0; }
+    .category-span {
+      display: inline-block;
+      background-color: #000;
+      color: #fff;
+      padding: 4px 8px;
+      margin-right: 5px;
+      font-size: 0.5em;
+      text-transform: uppercase;
+    }
+
+    .p-worksEntry__conAdd {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    letter-spacing: 1px;
+    margin-bottom: 92px;
+}
+    .p-worksEntry__conAdd__l {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-top: 10px;
+    width: 50%;
+    position: relative;
+}
+    .p-worksEntry__conAdd__r {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-top: 10px;
+    width: 50%;
+    position: relative;
+}
+    .p-worksEntry__conAddLine {
+    background-color: rgba(0, 0, 0, 0.1);
+    height: 1px;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+    
+
+hr {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+.p-worksEntry__conAddLine:after {
+    background-color: rgba(0, 0, 0, 0.8);
+    content: '';
+    display: block;
+    height: 1px;
+    width: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.p-worksEntry__conAdd dl dt {
+     font-family: 'DIN Condensed Bold', sans-serif;
+    font-weight: 700;
+    font-size: 1.3em;
+    margin-bottom: 12px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding-top:20px;
+}
+
+dd{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-weight: 200;
+    font-size:0.9em;
+}
+
+
+  .slider-container {
+    overflow: hidden; 
+    position: relative;
+    width: 100%;
+    padding-top:1em;
+    height: 550px; /* Desktop Height */
+    margin-bottom:4em;
+}
+
+.slider {
+    display: flex;
+    height: 100%;
+    /* transition is handled via JS now */
+}
+
+.slide {
+    min-width: 100%;
+    height: 100%;
+    opacity: 1 !important; /* Keep visible so they can slide past */
+    display: flex !important;
+    align-items: center;      /* Vertical Center */
+    justify-content: center;   /* Horizontal Center */
+}
+
+.slide img {
+  max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+        .slide.active {
+            opacity: 1; /* Visible slide */
+        }
+        .slide.fading-out {
+            opacity: 0; /* Fade out current slide */
+        }
+        .nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 1);
+            color: white;
+            border: none;
+            width:3em;
+            height:3em;
+            cursor: pointer;
+            font-size: 20px;
+            z-index: 10; /* Ensure buttons are above slides */
+            transform-origin:center;
+        }
+        .prev>span{
+            display: inline-block;
+            margin-left: 8px;
+        }
+        .prev{
+            margin-left:0px;
+        }
+        .next {
+            right: 0px;
+
+        }
+        .next>span{
+            display: inline-block;
+            margin-right: 8px;
+        }
+        .nav-button:hover {
+            background: rgb(120, 120, 120);
+            transition: all 0.4s;
+        }
+
+        .nav-button.prev>span:after {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border-left: solid 1px #e8e8e8;
+    border-bottom: solid 1px #e8e8e8;
+    content: '';
+    display: block;
+    height: 16px;
+    width: 16px;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+    -webkit-transition: border-left 0.4s 
+cubic-bezier(0.165, 0.84, 0.44, 1), border-bottom 0.4s 
+cubic-bezier(0.165, 0.84, 0.44, 1);
+    transition: border-left 0.4s 
+cubic-bezier(0.165, 0.84, 0.44, 1), border-bottom 0.4s 
+cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+                .nav-button.next>span:after {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border-left: solid 1px #e8e8e8;
+    border-bottom: solid 1px #e8e8e8;
+    content: '';
+    display: block;
+    height: 16px;
+    width: 16px;
+    -webkit-transform: rotate(-135deg);
+    transform: rotate(-135deg);
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+    -webkit-transition: border-left 0.4s 
+cubic-bezier(0.165, 0.84, 0.44, 1), border-bottom 0.4s 
+cubic-bezier(0.165, 0.84, 0.44, 1);
+    transition: border-left 0.4s 
+cubic-bezier(0.165, 0.84, 0.44, 1), border-bottom 0.4s 
+cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+
+    footer {
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #111;
+      margin-top: 9em;
+      color: #fff;
+      font-size: 11px;
+      letter-spacing: 1px;
+      flex-shrink: 0;
+    }
+.footerContainer {
+      padding-left: 4em;
+      padding-right: 4em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 5rem;
+    }
+
+    .footerContainer #social-icon {
+      margin-left: auto;
+    }
+
+    #social-icon a {
+      color: #fff;
+      font-size: 1.5em;
+      border: 0.5px solid #fff;
+      margin-left: 10px;
+      text-decoration: none;
+      transition: color 0.3s ease;
+      padding: 8px;
+    }
+
+
+
+
+
+        @media (max-width: 900px) {
+            .slider-container {
+    height: 700px;
+}
+      .c-header__bc{display:none;}
+          .p-worksEntry__conAdd {
+        display: block;
+        margin-bottom: 10.13333vw;
+    }
+          .p-worksEntry__conAdd__l {
+        padding-top: 3vw;
+        margin-bottom: 6.66667vw;
+        width: 100%;
+    }
+          .p-worksEntry__conAdd__r {
+        padding-top: 3vw;
+        width: 100%;
+    }
+    .slide {
+    height: 100%;
+}
+           .footerContainer { padding-left: 20px; padding-right: 20px; }
+    }
+
+    @media (max-width: 650px) {
+              .nav-button{
+           opacity: 0;
+        }
+
+      .detail-title { font-size: 1.5em; }
+          .detail-info {
+        padding-left:20px;
+        padding-right:20px;
+
+    }
+                .footerContainer {
+        padding: 2em 2em;
+        vertical-align: middle;
+        font-size: 9px;
+        flex-wrap: wrap;
+        text-align: left;
+      }
+           footer { text-align: left; }
+      .footerContainer p { order: 1; width: 100%; }
+            #social-icon a { margin-left: 5px; margin-right: 5px; }
+      #social-icon { display: block !important; width: 100%; }
+    }
+  </style>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+      <div class="c-header__tool">
+    <div class="c-header__trigger">
+      <div class="c-header__triggerWrap">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+      <div class="c-header__bc"><ul><li><a href="works.html">WORKS</a></li></ul></div>
+  <div class="sidebar">
+    <ul>
+      <li><a href="index.html">HOME</a></li>
+      <li><a href="works.html">WORKS</a></li>
+      <li><a href="darkroom.html">DARKROOM</a></li>
+      <li><a href="about.html">ABOUT</a></li>
+      <li><a href="contact.html">CONTACT</a></li>
+    </ul>
+  </div>
+  <div class="overlay"></div>
+  <div class="detail-container">
+    <div id="detail-content" class="detail-content">
+      <p>Loading...</p>
+    </div>
+  </div>
+
+  <script>
+   // Function to get query parameter from URL
+function getParameterByName(name, url) {
+  if (!url) url = window.location.href;
+  name = name.replace(/[\[\]]/g, '\\$&');
+  const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+  if (!results) return null;
+  if (!results[2]) return '';
+  return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
+async function fetchPortfolio() {
+  const apiKey = 'AIzaSyDkBq1WZHB0ecQQrapT9h_DK0a4yQIEpDg';
+  const spreadsheetId = '1Qbm0H_uwtTXvZ5U529QgRn4gzjoWDgOyJlDGbuE7weM';
+  const range = 'Project Details!A1:J';
+  const detailDiv = document.getElementById('detail-content');
+  try {
+    const response = await fetch(
+      `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${apiKey}`
+    );
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const data = await response.json();
+    if (!data.values || data.values.length === 0) {
+      detailDiv.innerHTML = '<p>No data found.</p>';
+      return [];
+    }
+    const headers = data.values[0].map(header => header.toLowerCase().replace(/\s/g, ''));
+    return data.values.slice(1).map(row => {
+      const rowData = {};
+      headers.forEach((header, index) => {
+        rowData[header] = row[index] || '';
+      });
+      return rowData;
+    });
+  } catch (error) {
+    console.error('Error fetching portfolio:', error);
+    detailDiv.innerHTML = '<p>Failed to load details. Please try again later.</p>';
+    return [];
+  }
+}
+
+async function displayDetail() {
+  const id = getParameterByName('id');
+  if (!id) {
+    document.getElementById('detail-content').innerHTML = '<p>No ID provided.</p>';
+    return;
+  }
+
+  const allItems = await fetchPortfolio();
+  const item = allItems.find(item => item.id === id);
+
+  if (!item) {
+    document.getElementById('detail-content').innerHTML = '<p>Item not found.</p>';
+    return;
+  }
+
+let gallerySlides = '';
+      let hasGallery = false;
+if (item.gallery && item.gallery.trim()) {
+    const galleryUrls = item.gallery.split(',').map(url => url.trim()).filter(url => url.length > 0);
+    if (galleryUrls.length > 0) {
+        hasGallery = true;
+        
+        // 1. Create the actual slides
+        const originalSlides = galleryUrls.map((url, index) => 
+            `<div class="slide"><img src="${url}" alt="Slide ${index + 1}"></div>`
+        ).join('');
+
+        // 2. Wrap them with clones (Last slide at start, First slide at end)
+        const firstClone = `<div class="slide clone"><img src="${galleryUrls[0]}"></div>`;
+        const lastClone = `<div class="slide clone"><img src="${galleryUrls[galleryUrls.length - 1]}"></div>`;
+        
+        gallerySlides = lastClone + originalSlides + firstClone;
+    }
+}
+
+  const detailDiv = document.getElementById('detail-content');
+  detailDiv.innerHTML = `
+    <div class="detail-image">
+      <img src="${item.topimage}">
+    </div>
+    <div class="detail-info">
+      <div class="detail-title">${item.title}</div>
+      <div class="sub-title">${item.subtitle ? `<p>${item.subtitle}</p>` : ''}</div>
+      <div class="slider-container">
+        <div class="slider">
+         ${gallerySlides}
+         ${hasGallery && gallerySlides.split('<div').length > 2 ? `
+        </div>
+        <button class="nav-button prev" onclick="moveSlide(-1)"><span></span></i></button>
+        <button class="nav-button next" onclick="moveSlide(1)"><span></span></i></button>
+      </div>
+       ` : ''}
+      <div class="p-worksEntry__conAdd">
+        <div class="p-worksEntry__conAdd__l">
+          <hr class="p-worksEntry__conAddLine">
+          <dl>
+            <dt>Client</dt>
+            <dd>${item.client ? `${item.client}` : ''}</dd>
+          </dl>
+          <dl>
+            <dt>Date</dt>
+            <dd>${item.date ? `${item.date}` : ''}</dd>
+          </dl>
+        </div>
+        <div class="p-worksEntry__conAdd__r">
+          <hr class="p-worksEntry__conAddLine">
+          <dl>
+            <dt>Description</dt>
+            <dd>${item.description ? `${item.description}` : ''}</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // Initialize slider after DOM update
+  initializeSlider();
+}
+
+// Slider initialization function
+function initializeSlider() {
+    const slider = document.querySelector('.slider');
+    const slides = document.querySelectorAll('.slide');
+    if (slides.length <= 1) return;
+
+    let currentIndex = 1; // Start at 1 because index 0 is the clone
+    let isTransitioning = false;
+
+    // Initial position (show the first real slide, not the clone)
+    slider.style.transition = 'none';
+    slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+    function moveSlide(direction) {
+        if (isTransitioning) return;
+        isTransitioning = true;
+
+        currentIndex += direction;
+        
+        // Add transition back for the move
+        slider.style.transition = 'transform 0.5s ease-in-out';
+        slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+    }
+
+    // This listener detects when the transition ends to handle the loop "jump"
+    slider.addEventListener('transitionend', () => {
+        isTransitioning = false;
+        
+        // If we are on the "First Slide Clone" (at the very end)
+        if (currentIndex === slides.length - 1) {
+            slider.style.transition = 'none'; // Snap instantly
+            currentIndex = 1;
+            slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+        }
+        
+        // If we are on the "Last Slide Clone" (at the very beginning)
+        if (currentIndex === 0) {
+            slider.style.transition = 'none'; // Snap instantly
+            currentIndex = slides.length - 2;
+            slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+        }
+    });
+
+    // Auto Play
+    let autoPlay = setInterval(() => moveSlide(1), 5000);
+    
+
+    window.moveSlide = moveSlide;
+}
+
+// Toggle hamburger to cross, sidebar, and overlay
+const headerTrigger = document.querySelector('.c-header__trigger');
+const sidebar = document.querySelector('.sidebar');
+const overlay = document.querySelector('.overlay');
+if (headerTrigger && sidebar && overlay) {
+  headerTrigger.addEventListener('click', () => {
+    headerTrigger.classList.toggle('active');
+    sidebar.classList.toggle('active');
+    overlay.classList.toggle('active');
+  });
+}
+
+// Load details on page load
+window.onload = displayDetail;
+  </script>
+
+      <footer>
+    <div class="footerContainer">
+      <p style="display: inline-block;">Copyright © FRANK LAI All Rights Reserved.</p>
+      <div style="margin-left: auto; display: inline-block;" id="social-icon">
+        <a target="_blank" href="https://www.instagram.com/capturebyfrank/" class="fa fa-instagram"></a>
+        <a target="_blank" href="https://www.linkedin.com/in/frank-l-127b291a5/" class="fa fa-linkedin"></a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

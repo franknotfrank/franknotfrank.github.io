@@ -1,0 +1,581 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Portfolio</title>
+  <style>
+    @import url('https://db.onlinewebfonts.com/c/d45f96029e61832fd84afffd3068b768?family=DIN+Condensed+Bold');
+     @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+    body { font-family: "Open Sans", sans-serif;margin: 0; overflow-x: hidden; }
+    .portfolio-container { display: grid; grid-template-columns: repeat(3, minmax(250px, 1fr));}
+    .portfolio-item { padding: 10px; padding-bottom: 2em; cursor: pointer; }
+    .portfolio-item-title { font-weight: 700; letter-spacing: 1px; font-size: 1em; }
+    .portfolio-item p { font-size: 0.8em; font-weight: 200; }
+    .filter { display: flex; padding-bottom: 3em; justify-content: center; font-size: 1em; font-family: "Open Sans", sans-serif; font-weight: 700; letter-spacing: 2px; font-style: italic; }
+    .filter a { margin: 10px 0px; padding: 0px 10px; cursor: pointer; color: inherit; text-decoration: none; transition: color 0.3s ease; text-transform: uppercase; }
+    .filter a.active { color: #d3d3d3; }
+    .filter a:hover { color: #d3d3d3; }
+    .filter a:not(:last-child)::after { 
+      content: "/"; 
+      margin-left: 15px; 
+      color: #000; 
+    }
+      a {
+          text-decoration:none;
+      }
+
+  
+    .c-header__tool {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+
+    .c-header__trigger {
+      cursor: pointer;
+      position: relative;
+      background-color: #fff;
+      height: 70px;
+      width: 70px;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: background-color 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      z-index: 1001;
+    }
+
+
+    .c-header__bc {
+       padding-top: 75px;
+       position: fixed;
+       margin-left: -15px;
+}
+    .c-header__bc ul li {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex
+;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+    .c-header__bc ul li:before {
+    background-color: #000;
+    content: '';
+    display: block;
+    height: 80px;
+    width: 0.5px;
+    margin-bottom: 20px;
+}
+
+    .c-header__bc ul li a {
+        color:black;
+    font-size: 14px;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    display: block;
+    -webkit-writing-mode: vertical-rl;
+    -ms-writing-mode: tb-rl;
+    writing-mode: vertical-rl;
+    font-family: "Open Sans", sans-serif;
+}
+
+    .c-header__trigger.active {
+      background-color: #000;
+    }
+
+    .c-header__triggerWrap {
+      position: relative;
+      height: 19px;
+      width: 20px;
+    }
+
+    .c-header__triggerWrap span {
+      background-color: #000;
+      width: 100%;
+      height: 1px;
+      position: absolute;
+      left: 0;
+      transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), background-color 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    .c-header__triggerWrap span:nth-child(1) {
+      top: 0;
+    }
+
+    .c-header__triggerWrap span:nth-child(2) {
+      top: 9px;
+    }
+
+    .c-header__triggerWrap span:nth-child(3) {
+      bottom: 0;
+    }
+
+    .c-header__trigger.active .c-header__triggerWrap span:nth-child(1) {
+      transform: translateY(9px) rotate(45deg);
+      background-color: #fff;
+    }
+
+    .c-header__trigger.active .c-header__triggerWrap span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .c-header__trigger.active .c-header__triggerWrap span:nth-child(3) {
+      transform: translateY(-9px) rotate(-45deg);
+      background-color: #fff;
+    }
+
+    .c-header__trigger:before {
+      background-color: #000;
+      content: '';
+      display: block;
+      position: absolute;
+      right: 0;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      transform: scaleX(0) skewX(30deg);
+      transform-origin: top right;
+    }
+
+    .c-header__trigger:after {
+      background-color: rgba(0, 0, 0, 0.9);
+      content: '';
+      display: block;
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transition: opacity 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    .sidebar {
+       font-family: 'DIN Condensed Bold', sans-serif;
+       font-size:1.5rem;
+       letter-spacing:2px;
+      position: fixed;
+      top: 0;
+      left: -400px;
+      width: 400px;
+      height: 100%;
+      background-color: #f5f5f5;
+      padding: 20px;
+      z-index: 999;
+      opacity: 0;
+      transform: translateX(-100%);
+      transition: opacity 0.4s ease, transform 0.7s ease;
+    }
+
+    .sidebar.active {
+      opacity: 1;
+      transform: translateX(0);
+      left: 0;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding-top: 130px;
+      margin: 0;
+    }
+
+    .sidebar ul li {
+      padding: 15px 0;
+      font-size: 1.5em;
+      font-weight: bold;
+      color: #000;
+      cursor: pointer;
+    }
+
+    .sidebar ul li:hover {
+      color: #333;
+    }
+
+    .sidebar ul li a {
+        color:black;
+         text-decoration: none;
+    }  
+
+      .sidebar ul li:last-child:after {
+      content: '';
+      margin-top:30px;
+      background-color:black;
+      display: block;
+      height: 0.6px;
+      width: 50px;
+      position: absolute;
+      
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 1);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease, visibility 0s linear 0.4s;
+      z-index: 998;
+    }
+
+    .overlay.active {
+      opacity: 0.5;
+      visibility: visible;
+      transition: opacity 0.4s ease;
+    }
+
+    .portfolio-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+      transform-origin: center;
+    }
+
+
+
+
+    .container {
+      display: grid;
+      grid-template-columns: 5fr 4fr;
+      height: 100vh;
+      margin:0 11%;
+    }
+
+    /* ────────────────────────────────────
+       LEFT: Image + decorative ABOUT words
+    ──────────────────────────────────── */
+    .left {
+  max-width: fit-content; /* Shrink to content width */
+  margin: auto 0;
+  text-align: left;       /* Keeps text inside left-aligned */
+    }
+
+       .mainTitle {
+      font-family: 'DIN Condensed Bold', sans-serif;
+      font-size: 8em;
+      letter-spacing: 9px;
+    }
+
+    .email-text{
+      letter-spacing: 2px;
+      font-weight: 100;
+    }
+    .email-text a{
+      text-decoration: underline;
+      text-underline-offset: 0.2em;
+      color:black;
+    }
+
+    .email-text .email-description{
+      padding-top:40px;
+      font-size:0.2em;
+    }
+
+  
+
+    /* ────────────────────────────────────
+       RIGHT: Text content
+    ──────────────────────────────────── */
+    .right {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      margin: auto 0;
+    }
+
+    
+.contact-section {
+  font-family: "Open Sans", sans-serif;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Space between rows */
+}
+
+/* Base style for Inputs and Textarea */
+.contact-form input, 
+.contact-form textarea {
+  width: 100%;
+  padding: 15px;
+  border: 1px solid #999; /* Thin grey border */
+  outline: none;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  box-sizing: border-box; /* Crucial for width alignment */
+  transition: border-color 0.3s ease;
+    font-family: "Open Sans", sans-serif;
+}
+
+/* Textarea specific height */
+.contact-form textarea {
+  resize: vertical; /* Allows user to grow height but not width */
+  min-height: 200px;
+}
+
+/* Placeholder styling */
+.contact-form input::placeholder, 
+.contact-form textarea::placeholder {
+  color: #999;
+  font-weight: 300;
+}
+
+/* Focus effect */
+.contact-form input:focus, 
+.contact-form textarea:focus {
+  border-color: #000;
+}
+
+/* The Black Button */
+.submit-btn {
+  background-color: #000;
+  color: #fff;
+  border: none;
+  padding: 18px 40px;
+  font-size: 0.85rem;
+  font-weight: 100;
+  letter-spacing: 2px;
+  cursor: pointer;
+  align-self: flex-start; /* Keeps button on the left */
+  transition: background-color 0.3s ease;
+    font-family: "Open Sans", sans-serif;
+}
+
+
+
+    .mainContainer {
+      margin: 0 auto; 
+      padding: 0 6%; 
+    }
+
+    .footerContainer {
+      padding-left: 4em;
+      padding-right: 4em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 5rem;
+    }
+
+    .footerContainer #social-icon {
+      margin-left: auto;
+    }
+
+    #social-icon a {
+      color: #fff;
+      font-size: 1.5em;
+      border: 0.5px solid #fff;
+      margin-left: 10px;
+      text-decoration: none;
+      transition: color 0.3s ease;
+      padding: 8px;
+    }
+
+    .mobile-filter {
+      display: none;
+      padding-bottom: 3em;
+      text-align: center;
+      font-family: "Open Sans", sans-serif;
+      font-weight: 700;
+      letter-spacing: 2px;
+      font-style: italic;
+      font-size: 1em;
+      position: relative;
+    }
+
+    .selected-filter {
+      cursor: pointer;
+      color: inherit;
+      text-transform: uppercase;
+      display: inline-block;
+    }
+
+    .filter-options {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      background: #fff;
+      position: absolute;
+      width: 100%;
+      left: 0;
+      z-index: 10;
+      border: 1px solid #ddd;
+      display: none;
+    }
+
+    .filter-options li {
+      padding: 10px;
+      cursor: pointer;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    .filter-options li:hover {
+      background: #f0f0f0;
+    }
+
+    footer {
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #111;
+      color: #fff;
+      font-size: 11px;
+      letter-spacing: 1px;
+    }
+
+    @media (max-width: 1000px) {
+      .portfolio-container { display: block; }
+      .mainContainer { padding: 0 20px; }
+      .portfolio-item { padding-left: 0; padding-right: 0; }
+      .footerContainer { padding-left: 20px; padding-right: 20px; }
+      .c-header__bc{display:none;}
+
+      .container { 
+    grid-template-columns: 1fr; /* Changes 2 columns to 1 */
+    height: auto;      
+     padding: 8em 0;
+  }
+
+   
+
+ 
+  .right {
+     padding-top: 5rem;
+      height: auto;
+  }
+      .portrait-wrapper {
+      width: 70%;
+      margin: 8rem 0;
+    }
+
+      
+    }
+
+    @media (max-width: 650px) {
+      .filter { display: none; font-size: 0.8em; }
+      .mobile-filter { display: block; }
+        .left {
+    position: relative;
+  }
+
+      .container { 
+     font-size:0.7em;
+  }
+
+      .footerContainer {
+        padding: 2em 2em;
+        vertical-align: middle;
+        font-size: 9px;
+        flex-wrap: wrap;
+        text-align: left;
+      }
+      footer { text-align: left; }
+      .footerContainer p { order: 1; width: 100%; }
+      #social-icon a { margin-left: 5px; margin-right: 5px; }
+      #social-icon { display: block !important; width: 100%; }
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+  <div class="c-header__tool">
+    <div class="c-header__trigger">
+      <div class="c-header__triggerWrap">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+  <div class="c-header__bc"><ul><li><a href="contact.html">CONTACT</a></li></ul></div>
+  <div class="sidebar">
+    <ul>
+      <li><a href="index.html">HOME</a></li>
+      <li><a href="works.html">WORKS</a></li>
+      <li><a href="darkroom.html">DARKROOM</a></li>
+      <li><a href="about.html">ABOUT</a></li>
+      <li><a href="contact.html">CONTACT</a></li>
+    </ul>
+  </div>
+  <div class="overlay"></div>
+
+<div class="container">
+  <div class="left">
+    <div class="mainTitle">
+      CONTACT
+    </div>
+        <div class="email-text">
+    For project inquries,please email:<br>
+    <a href="mailto:revan9413@gmail.com">revan9413@gmail.com</a><br> 
+    <div class="email-description">or send a message via this form.</div>
+    </div>
+    
+  </div>
+
+  <div class="right">
+    <section class="contact-section">
+  <form class="contact-form" action="https://formspree.io/f/mojppryo"
+  method="POST">
+    <div class="form-group">
+      <input type="text" name="name" placeholder="Name" required>
+    </div>
+    
+    <div class="form-group">
+      <input type="email" name="email" placeholder="Email" required>
+    </div>
+    
+    <div class="form-group">
+      <input type="tel" name="phone" placeholder="Phone number">
+    </div>
+    
+    <div class="form-group">
+      <textarea name="message" placeholder="Message..." rows="8" required></textarea>
+    </div>
+    
+    <button type="submit" class="submit-btn">SEND MESSAGE</button>
+  </form>
+</section>
+  </div>
+</div>
+
+  <footer>
+    <div class="footerContainer">
+      <p style="display: inline-block;">Copyright © FRANK LAI All Rights Reserved.</p>
+      <div style="margin-left: auto; display: inline-block;" id="social-icon">
+        <a target="_blank" href="https://www.instagram.com/capturebyfrank/" class="fa fa-instagram"></a>
+        <a target="_blank" href="https://www.linkedin.com/in/frank-l-127b291a5/" class="fa fa-linkedin"></a>
+      </div>
+    </div>
+
+    <script>
+  // Toggle hamburger to cross, sidebar, and overlay
+const headerTrigger = document.querySelector('.c-header__trigger');
+const sidebar = document.querySelector('.sidebar');
+const overlay = document.querySelector('.overlay');
+if (headerTrigger && sidebar && overlay) {
+  headerTrigger.addEventListener('click', () => {
+    headerTrigger.classList.toggle('active');
+    sidebar.classList.toggle('active');
+    overlay.classList.toggle('active');
+  });
+}
+</script>
+  </footer>
+</body>
+</html>

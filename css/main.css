@@ -3,6 +3,7 @@
 	Google Font
 
 ========================================================================== */
+ 
 @font-face {
   font-family: "Poppins", sans-serif;
   font-family: "Oranienbaum", serif;
@@ -164,7 +165,7 @@ nav ul {
 
 nav li {
   display: inline;
-  padding: 0 20px;
+  padding: 0 40px;
 }
 
 nav li a {
@@ -398,7 +399,7 @@ nav li a {
 }
 
 .cover--name {
-  font-family: 'Bodoni Moda', serif;
+font-family: 'Bodoni Moda', serif;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -432,7 +433,7 @@ nav li a {
 .cover--menu a {
   text-decoration: none;
   position: relative;
-  font-size: 1rem;
+  font-size: 1.3rem;
   -webkit-transition: -webkit-transform .2s;
   transition: -webkit-transform .2s;
   transition: transform .2s;
@@ -460,10 +461,25 @@ nav li a {
   html {
     font-size:0.6rem;
   }
+  .cover--main::before {
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.82)), to(rgba(255, 255, 255, 0)));
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.82) 0%, rgba(255, 255, 255, 0) 100%);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.82)), to(rgba(255, 255, 255, 0)));
+  background-image: linear-gradient(rgba(255, 255, 255, 0.82) 0%, rgba(255, 255, 255, 0) 100%);
+  top: 0;
+}
     .cover--name {
-        font-size:4.5em;
+        font-size:4em;
+       
     }
 
+.cover--menu a {
+        font-size:2.1em;
+        line-height:1em;
+    }
+nav li {
+  padding: 0 20px;
+}
   :root {
   --gutter: 0.9rem;
 }

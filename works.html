@@ -1,0 +1,651 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Portfolio</title>
+  <style>
+    @import url('https://db.onlinewebfonts.com/c/d45f96029e61832fd84afffd3068b768?family=DIN+Condensed+Bold');
+    @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+    html, body {
+      height: 100%;
+       margin: 0;
+     }
+    body {
+      display: flex;
+      flex-direction: column;
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
+      height: 100%;
+    }
+    .portfolio-container { display: grid; grid-template-columns: repeat(3, minmax(250px, 1fr)); font-family: "Open Sans", sans-serif; }
+    .portfolio-item { padding: 10px; padding-bottom: 2em; cursor: pointer; }
+    .portfolio-item-title { font-weight: 700; letter-spacing: 1px; font-size: 1em; }
+    .portfolio-item p { font-size: 0.8em; font-weight: 200; }
+    .filter { display: flex; padding-bottom: 3em; justify-content: center; font-size: 1em; font-family: "Open Sans", sans-serif; font-weight: 700; letter-spacing: 2px; font-style: italic; }
+    .filter a { margin: 10px 0px; padding: 0px 10px; cursor: pointer; color: inherit; text-decoration: none; transition: color 0.3s ease; text-transform: uppercase; }
+    .filter a.active { color: #d3d3d3; }
+    .filter a:hover { color: #d3d3d3; }
+    .filter a:not(:last-child)::after { 
+      content: "/"; 
+      margin-left: 15px; 
+      color: #000; 
+    }
+      a {
+          text-decoration:none;
+      }
+
+  
+    .c-header__tool {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+
+    .c-header__trigger {
+      cursor: pointer;
+      position: relative;
+      background-color: #fff;
+      height: 70px;
+      width: 70px;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: background-color 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      z-index: 1001;
+    }
+
+
+    .c-header__bc {
+       padding-top: 75px;
+       position: fixed;
+       margin-left: -15px;
+}
+    .c-header__bc ul li {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex
+;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+    .c-header__bc ul li:before {
+    background-color: #000;
+    content: '';
+    display: block;
+    height: 80px;
+    width: 0.5px;
+    margin-bottom: 20px;
+}
+
+    .c-header__bc ul li a {
+        color:black;
+    font-size: 14px;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    display: block;
+    -webkit-writing-mode: vertical-rl;
+    -ms-writing-mode: tb-rl;
+    writing-mode: vertical-rl;
+    font-family: "Open Sans", sans-serif;
+}
+
+    .c-header__trigger.active {
+      background-color: #000;
+    }
+
+    .c-header__triggerWrap {
+      position: relative;
+      height: 19px;
+      width: 20px;
+    }
+
+    .c-header__triggerWrap span {
+      background-color: #000;
+      width: 100%;
+      height: 1px;
+      position: absolute;
+      left: 0;
+      transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), background-color 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    .c-header__triggerWrap span:nth-child(1) {
+      top: 0;
+    }
+
+    .c-header__triggerWrap span:nth-child(2) {
+      top: 9px;
+    }
+
+    .c-header__triggerWrap span:nth-child(3) {
+      bottom: 0;
+    }
+
+    .c-header__trigger.active .c-header__triggerWrap span:nth-child(1) {
+      transform: translateY(9px) rotate(45deg);
+      background-color: #fff;
+    }
+
+    .c-header__trigger.active .c-header__triggerWrap span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .c-header__trigger.active .c-header__triggerWrap span:nth-child(3) {
+      transform: translateY(-9px) rotate(-45deg);
+      background-color: #fff;
+    }
+
+    .c-header__trigger:before {
+      background-color: #000;
+      content: '';
+      display: block;
+      position: absolute;
+      right: 0;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      transform: scaleX(0) skewX(30deg);
+      transform-origin: top right;
+    }
+
+    .c-header__trigger:after {
+      background-color: rgba(0, 0, 0, 0.9);
+      content: '';
+      display: block;
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transition: opacity 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    .sidebar {
+       font-family: 'DIN Condensed Bold', sans-serif;
+       font-size:1.5rem;
+       letter-spacing:2px;
+      position: fixed;
+      top: 0;
+      left: -400px;
+      width: 400px;
+      height: 100%;
+      background-color: #f5f5f5;
+      padding: 20px;
+      z-index: 999;
+      opacity: 0;
+      transform: translateX(-100%);
+      transition: opacity 0.4s ease, transform 0.7s ease;
+    }
+
+    .sidebar.active {
+      opacity: 1;
+      transform: translateX(0);
+      left: 0;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding-top: 130px;
+      margin: 0;
+    }
+
+    .sidebar ul li {
+      padding: 15px 0;
+      font-size: 1.5em;
+      font-weight: bold;
+      color: #000;
+      cursor: pointer;
+    }
+
+    .sidebar ul li:hover {
+      color: #333;
+    }
+
+    .sidebar ul li a {
+        color:black;
+         text-decoration: none;
+    }  
+
+      .sidebar ul li:last-child:after {
+      content: '';
+      margin-top:30px;
+      background-color:black;
+      display: block;
+      height: 0.6px;
+      width: 50px;
+      position: absolute;
+      
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 1);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease, visibility 0s linear 0.4s;
+      z-index: 998;
+    }
+
+    .overlay.active {
+      opacity: 0.5;
+      visibility: visible;
+      transition: opacity 0.4s ease;
+    }
+
+    .portfolio-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+      transform-origin: center;
+    }
+
+    .portfolio-item .image-wrapper {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      aspect-ratio: 3 / 2;
+    }
+
+    .portfolio-item:hover img {
+      transform: scale(1.2);
+    }
+
+    .category-span {
+      display: inline-block;
+      background-color: #000;
+      letter-spacing: 1px;
+      color: #fff;
+      padding: 2px 6px;
+      margin-right: 5px;
+      font-size: 0.5em;
+      font-weight: 600; 
+      text-transform: uppercase;
+    }
+
+    .mainTitle {
+      font-family: 'DIN Condensed Bold', sans-serif;
+      font-size: 6em;
+      letter-spacing: 6px;
+      text-align: center;
+      padding-top: 1em;
+      padding-bottom: 0.1em;
+    }
+
+    .mainContainer {
+      margin: 0 auto; 
+      padding: 0 6%; 
+      min-height: 100%;
+      padding-bottom: 5%;
+      flex: 1 0 auto; /* This pushes the footer down */
+    }
+
+    .footerContainer {
+      padding-left: 4em;
+      padding-right: 4em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 5rem;
+    }
+
+    .footerContainer #social-icon {
+      margin-left: auto;
+    }
+
+    #social-icon a {
+      color: #fff;
+      font-size: 1.5em;
+      border: 0.5px solid #fff;
+      margin-left: 10px;
+      text-decoration: none;
+      transition: color 0.3s ease;
+      padding: 8px;
+    }
+
+    .mobile-filter {
+      display: none;
+      padding-bottom: 3em;
+      text-align: center;
+      font-family: "Open Sans", sans-serif;
+      font-weight: 700;
+      letter-spacing: 2px;
+      font-style: italic;
+      font-size: 1em;
+      position: relative;
+    }
+
+    .selected-filter {
+      cursor: pointer;
+      color: inherit;
+      text-transform: uppercase;
+      display: inline-block;
+    }
+
+    .filter-options {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      background: #fff;
+      position: absolute;
+      width: 100%;
+      left: 0;
+      z-index: 10;
+      border: 1px solid #ddd;
+      display: none;
+    }
+
+    .filter-options li {
+      padding: 10px;
+      cursor: pointer;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    .filter-options li:hover {
+      background: #f0f0f0;
+    }
+
+    footer {
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #111;
+      flex-shrink: 0;
+      color: #fff;
+      font-size: 11px;
+      letter-spacing: 1px;
+    }
+
+    @media (max-width: 900px) {
+      .portfolio-container { display: block; }
+      .mainContainer { padding: 0 20px; padding-bottom: 5%;}
+      .portfolio-item { padding-left: 0; padding-right: 0; }
+      .footerContainer { padding-left: 20px; padding-right: 20px; }
+      .c-header__bc{display:none;}
+    }
+
+    @media (max-width: 650px) {
+      .filter { display: none; font-size: 0.8em; }
+      .mobile-filter { display: block; }
+      .footerContainer {
+        padding: 2em 2em;
+        vertical-align: middle;
+        font-size: 9px;
+        flex-wrap: wrap;
+        text-align: left;
+      }
+      footer { text-align: left; }
+      .footerContainer p { order: 1; width: 100%; }
+      #social-icon a { margin-left: 5px; margin-right: 5px; }
+      #social-icon { display: block !important; width: 100%; }
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+  <div class="c-header__tool">
+    <div class="c-header__trigger">
+      <div class="c-header__triggerWrap">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+  <div class="c-header__bc"><ul><li><a href="works.html">WORKS</a></li></ul></div>
+  <div class="sidebar">
+    <ul>
+      <li><a href="index.html">HOME</a></li>
+      <li><a href="works.html">WORKS</a></li>
+      <li><a href="darkroom.html">DARKROOM</a></li>
+      <li><a href="about.html">ABOUT</a></li>
+      <li><a href="contact.html">CONTACT</a></li>
+    </ul>
+  </div>
+  <div class="overlay"></div>
+  <div class="mainContainer">
+    <div class="mainTitle">WORKS</div>
+    <div class="filter">
+      <a href="#" onclick="filterPortfolio('All');return false;" class="active">All</a>
+      <a href="#" onclick="filterPortfolio('Fashion');return false;">Fashion</a>
+      <a href="#" onclick="filterPortfolio('Product');return false;">Product</a>
+      <a href="#" onclick="filterPortfolio('Portrait');return false;">Portrait</a>
+      <a href="#" onclick="filterPortfolio('Retouch');return false;">Retouch</a>
+    </div>
+    <div class="mobile-filter">
+      <div class="selected-filter">/　CATEGORY ▼　/</div>
+      <ul class="filter-options">
+        <li data-value="All">ALL</li>
+        <li data-value="Fashion">FASHION</li>
+        <li data-value="Product">PRODUCT</li>
+        <li data-value="Portrait">PORTRAIT</li>
+        <li data-value="Retouch">RETOUCH</li>
+      </ul>
+    </div>
+    <div id="portfolio" class="portfolio-container"></div>
+  </div>
+  <footer>
+    <div class="footerContainer">
+      <p style="display: inline-block;">Copyright © FRANK LAI All Rights Reserved.</p>
+      <div style="margin-left: auto; display: inline-block;" id="social-icon">
+        <a target="_blank" href="https://www.instagram.com/capturebyfrank/" class="fa fa-instagram"></a>
+        <a target="_blank" href="https://www.linkedin.com/in/frank-l-127b291a5/" class="fa fa-linkedin"></a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    async function fetchPortfolio() {
+      const apiKey = 'AIzaSyDkBq1WZHB0ecQQrapT9h_DK0a4yQIEpDg';
+      const spreadsheetId = '1Qbm0H_uwtTXvZ5U529QgRn4gzjoWDgOyJlDGbuE7weM';
+      const range = 'Project Details!A1:J';
+      const portfolioDiv = document.getElementById('portfolio');
+      try {
+        const response = await fetch(
+          `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${apiKey}`
+        );
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        if (!data.values || data.values.length === 0) {
+          portfolioDiv.innerHTML = '<p>No portfolio items found.</p>';
+          return [];
+        }
+        const headers = data.values[0].map(header => header.toLowerCase().replace(/\s/g, ''));
+        const requiredHeaders = ['id', 'title', 'thumb', 'category'];
+        const missingHeaders = requiredHeaders.filter(header => !headers.includes(header));
+        if (missingHeaders.length > 0) {
+          portfolioDiv.innerHTML = `<p>Error: Missing required headers in Google Sheet: ${missingHeaders.join(', ')}</p>`;
+          return [];
+        }
+        return data.values.slice(1).map(row => {
+          const rowData = {};
+          headers.forEach((header, index) => {
+            rowData[header] = row[index] || '';
+          });
+          rowData.imageurl = rowData.thumb;
+          return rowData;
+        });
+      } catch (error) {
+        console.error('Error fetching portfolio:', error);
+        portfolioDiv.innerHTML = '<p>Failed to load portfolio. Please try again later.</p>';
+        return [];
+      }
+    }
+
+    function displayPortfolio(items) {
+      const portfolioDiv = document.getElementById('portfolio');
+      portfolioDiv.innerHTML = '';
+      items.forEach(item => {
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'portfolio-item';
+        itemDiv.setAttribute('role', 'button');
+        itemDiv.setAttribute('tabindex', '0');
+
+        const imageWrapper = document.createElement('div');
+        imageWrapper.className = 'image-wrapper';
+
+        const title = document.createElement('div');
+        title.className = 'portfolio-item-title';
+        title.textContent = item.title;
+
+        const subtitle = document.createElement('p');
+        subtitle.textContent = item.subtitle || '';
+
+        const img = document.createElement('img');
+        img.src = item.imageurl || 'path/to/fallback-image.jpg';
+        img.alt = item.title;
+        img.onerror = () => {
+          img.src = 'path/to/fallback-image.jpg';
+        };
+        img.style.maxWidth = '100%';
+        img.style.height = 'auto';
+
+        const categoryContainer = document.createElement('p');
+        const categories = item.category.split(', ').map(cat => cat.trim()).filter(cat => cat.length > 0);
+        categories.forEach(cat => {
+          const span = document.createElement('span');
+          span.className = 'category-span';
+          span.textContent = cat;
+          categoryContainer.appendChild(span);
+        });
+
+        itemDiv.appendChild(imageWrapper);
+        imageWrapper.appendChild(img);
+        itemDiv.appendChild(categoryContainer);
+        itemDiv.appendChild(title);
+        itemDiv.appendChild(subtitle);
+
+        itemDiv.addEventListener('click', () => {
+          if (item.id) {
+            window.location.href = `details.html?id=${encodeURIComponent(item.id)}`;
+          } else {
+            console.error('Invalid or missing ID for item:', item);
+          }
+        });
+
+        itemDiv.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            if (item.id) {
+              window.location.href = `details.html?id=${encodeURIComponent(item.id)}`;
+            } else {
+              console.error('Invalid or missing ID for item:', item);
+            }
+          }
+        });
+
+        portfolioDiv.appendChild(itemDiv);
+      });
+    }
+
+    let allItems = [];
+    let isFiltering = false;
+    let currentCategory = 'All';
+
+    async function filterPortfolio(category) {
+      if (isFiltering) return;
+      isFiltering = true;
+      const portfolioDiv = document.getElementById('portfolio');
+      portfolioDiv.innerHTML = '<p>Loading...</p>';
+      try {
+        if (!allItems.length) {
+          allItems = await fetchPortfolio();
+        }
+        const filteredItems = category === 'All' 
+          ? allItems 
+          : allItems.filter(item => {
+              const categories = item.category.split(', ').map(cat => cat.trim().toLowerCase());
+              return categories.includes(category.toLowerCase());
+            });
+        displayPortfolio(filteredItems);
+        currentCategory = category;
+
+        const selectedFilter = document.querySelector('.selected-filter');
+        if (selectedFilter) {
+          if (currentCategory === 'All') {
+            selectedFilter.textContent = `/　CATEGORY ▼　/`;
+          } else {
+            selectedFilter.textContent = `/　${category.toUpperCase()} ▼　/`;
+          }
+        }
+      } finally {
+        isFiltering = false;
+      }
+    }
+
+    async function refreshPortfolio() {
+      allItems = await fetchPortfolio();
+      filterPortfolio('All');
+    }
+
+    // Initial call to load portfolio
+    filterPortfolio('All');
+
+    // Get all filter items
+    const filterItems = document.querySelectorAll('.filter a');
+
+    // Add click event listener to each filter item
+    filterItems.forEach(item => {
+      item.addEventListener('click', () => {
+        filterItems.forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+        const filterValue = item.getAttribute('data-filter');
+        console.log(`Selected filter: ${filterValue}`);
+      });
+    });
+
+    // Mobile dropdown functionality
+    const selectedFilter = document.querySelector('.selected-filter');
+    const filterOptions = document.querySelector('.filter-options');
+
+    if (selectedFilter && filterOptions) {
+      selectedFilter.addEventListener('click', () => {
+        filterOptions.style.display = filterOptions.style.display === 'block' ? 'none' : 'block';
+      });
+
+      filterOptions.addEventListener('click', (e) => {
+        if (e.target.tagName === 'LI') {
+          const value = e.target.getAttribute('data-value');
+          filterPortfolio(value);
+          filterOptions.style.display = 'none';
+        }
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!selectedFilter.contains(e.target) && !filterOptions.contains(e.target)) {
+          filterOptions.style.display = 'none';
+        }
+      });
+    }
+
+    // Toggle hamburger to cross, sidebar, and overlay
+    const headerTrigger = document.querySelector('.c-header__trigger');
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.querySelector('.overlay');
+    if (headerTrigger && sidebar && overlay) {
+      headerTrigger.addEventListener('click', () => {
+        headerTrigger.classList.toggle('active');
+        sidebar.classList.toggle('active');
+        overlay.classList.toggle('active');
+      });
+    }
+  </script>
+</body>
+</html>
